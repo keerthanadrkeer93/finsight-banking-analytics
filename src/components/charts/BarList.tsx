@@ -28,6 +28,7 @@ export function BarList({ rows, selected, onSelect, format }: Props) {
               type="button"
               onClick={() => onSelect(r.id)}
               aria-pressed={on}
+              aria-label={`${r.name}: ${format(r.value)} revenue, ${chip ? signedPct(r.change as number, 0) : 'no change'} versus previous period, ${((r.share * 100).toFixed(0))}% share`}
               className={`block w-full min-w-0 rounded-md px-2 py-1.5 text-left transition-colors hover:bg-bg ${on ? 'bg-accent-soft' : ''}`}
             >
               <span className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-baseline gap-2 text-sm">

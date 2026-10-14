@@ -21,6 +21,7 @@ function Stack({ label, parts, onSelect }: { label: string; parts: Part[]; onSel
             type="button"
             onClick={() => onSelect(p.id)}
             title={`${p.id}: ${(p.share * 100).toFixed(1)}%`}
+            aria-label={`${label}: ${p.id} ${((p.share * 100).toFixed(1))}%`}
             className="grid place-content-center text-sm font-medium tabular-nums transition-[width] duration-500 hover:brightness-110"
             style={{ width: `${p.share * 100}%`, background: COLOR[p.id].bg, color: COLOR[p.id].fg }}
           >

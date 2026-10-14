@@ -25,8 +25,9 @@ function MultiSelect({ label, options, value, onChange }: { label: string; optio
         type="button"
         aria-haspopup="listbox"
         aria-expanded={open}
+        aria-label={`${label}: ${summary}`}
         onClick={() => setOpen((o) => !o)}
-        className={`inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-sm transition-colors hover:bg-surface ${value.length ? 'border-accent bg-accent-soft' : 'border-line bg-surface'}`}
+        className={`inline-flex h-10 min-h-10 items-center gap-1.5 rounded-md border px-3 text-sm transition-colors hover:bg-surface ${value.length ? 'border-accent bg-accent-soft' : 'border-line bg-surface'}`}
       >
         <span className="text-muted">{label}</span>
         <span className="max-w-[9rem] truncate font-medium">{summary}</span>
@@ -37,7 +38,7 @@ function MultiSelect({ label, options, value, onChange }: { label: string; optio
           {options.map((o) => {
             const on = value.includes(o.id)
             return (
-              <button key={o.id} type="button" role="option" aria-selected={on} onClick={() => onChange(toggle(value, o.id))} className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-left text-sm hover:bg-bg">
+              <button key={o.id} type="button" role="option" aria-selected={on} aria-label={`${o.name} ${on ? 'selected' : 'not selected'}`} onClick={() => onChange(toggle(value, o.id))} className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-left text-sm hover:bg-bg">
                 <span className={`grid h-4 w-4 place-content-center rounded border ${on ? 'border-accent bg-accent text-white' : 'border-line'}`}>{on && <Icon name="check" className="h-3 w-3" />}</span>
                 {o.name}
               </button>
@@ -58,7 +59,7 @@ function ChipGroup({ label, options, value, onChange }: { label: string; options
         {options.map((o) => {
           const on = value.includes(o.id)
           return (
-            <button key={o.id} type="button" aria-pressed={on} onClick={() => onChange(toggle(value, o.id))} className={`h-10 rounded-full border px-4 text-sm ${on ? 'border-accent bg-accent-soft font-medium text-accent' : 'border-line bg-surface'}`}>
+            <button key={o.id} type="button" aria-pressed={on} aria-label={`${o.name} ${on ? 'selected' : 'not selected'}`} onClick={() => onChange(toggle(value, o.id))} className={`h-10 rounded-full border px-4 text-sm ${on ? 'border-accent bg-accent-soft font-medium text-accent' : 'border-line bg-surface'}`}>
               {o.name}
             </button>
           )
@@ -70,7 +71,7 @@ function ChipGroup({ label, options, value, onChange }: { label: string; options
 
 function Switch({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
-    <button type="button" role="switch" aria-checked={checked} onClick={() => onChange(!checked)} className="inline-flex h-9 items-center gap-2 text-sm font-medium">
+    <button type="button" role="switch" aria-checked={checked} aria-label={`${label} toggle`} onClick={() => onChange(!checked)} className="inline-flex h-10 items-center gap-2 text-sm font-medium">
       <span className={`relative h-5 w-9 rounded-full transition-colors ${checked ? 'bg-accent' : 'bg-faint/60'}`}>
         <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all ${checked ? 'left-[18px]' : 'left-0.5'}`} />
       </span>
@@ -125,7 +126,7 @@ export function FilterBar({ ds, filters, range, comparable, compare, onFilters, 
         min={isoDay(ds.minDay)}
         max={isoDay(ds.maxDay)}
         onChange={(e) => e.target.value && set({ preset: 'custom', custom: { ...range, [which]: toDay(e.target.value) } })}
-        className="h-9 min-w-0 flex-1 rounded-md border border-line bg-surface px-2 text-sm text-ink"
+        className="h-10 min-w-0 flex-1 rounded-md border border-line bg-surface px-2 text-sm text-ink"
       />
     </label>
   )
@@ -141,8 +142,9 @@ export function FilterBar({ ds, filters, range, comparable, compare, onFilters, 
                   key={p.id}
                   type="button"
                   aria-pressed={filters.preset === p.id}
+                  aria-label={`${p.label} date preset`}
                   onClick={() => set({ preset: p.id, custom: p.id === 'custom' ? range : filters.custom })}
-                  className={`h-8 min-w-[3.75rem] flex-1 rounded px-3 text-sm transition-colors sm:flex-none ${filters.preset === p.id ? 'bg-ink font-medium text-white' : 'text-muted hover:text-ink'}`}
+                  className={`h-9 min-w-[3.75rem] flex-1 rounded px-3 text-sm transition-colors sm:flex-none ${filters.preset === p.id ? 'bg-ink font-medium text-white' : 'text-muted hover:text-ink'}`}
                 >
                   {p.label}
                 </button>
@@ -152,7 +154,7 @@ export function FilterBar({ ds, filters, range, comparable, compare, onFilters, 
               {groups.map((g) => <MultiSelect key={g.key} label={g.label} options={g.options} value={filters[g.key]} onChange={(v) => set({ [g.key]: v })} />)}
               {count > 0 && <button type="button" onClick={clear} className="px-1 text-sm text-accent hover:underline">Reset</button>}
             </div>
-            <button type="button" onClick={() => setSheet(true)} className="inline-flex h-9 shrink-0 items-center gap-2 rounded-md border border-line bg-surface px-3 text-sm md:hidden">
+            <button type="button" aria-label="Open filters" onClick={() => setSheet(true)} className="inline-flex h-10 shrink-0 items-center gap-2 rounded-md border border-line bg-surface px-3 text-sm md:hidden">
               <Icon name="filter" />
               Filters
               {count > 0 && <span className="grid h-5 min-w-5 place-content-center rounded-full bg-accent px-1 text-xs font-medium text-white">{count}</span>}
