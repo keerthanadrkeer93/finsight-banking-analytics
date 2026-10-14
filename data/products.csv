@@ -1,0 +1,7 @@
+product_id,product_name,product_category,fee_rate_pct,min_fee
+P01,Instant Credit,Lending,2.0,10
+P02,Platinum Card,Cards,1.2,15
+P03,Everyday Debit,Cards,0.5,2
+P04,Savings Plus,Deposits,0.25,1
+P05,Legacy Wallet,Payments,1.1,2
+P06,Forex & Remittance,Remittance,1.4,25
